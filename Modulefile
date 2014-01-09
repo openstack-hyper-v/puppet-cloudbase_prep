@@ -1,0 +1,12 @@
+name    'puppet-cloudbase_prep'
+version '0.0.1'
+project_page 'https://github.com/openstack-hyper-v/puppet-cloudbase_prep'
+source 'https://github.com/openstack-hyper-v/puppet-cloudbase_prep'
+author 'Timothy Rogers'
+license 'Apache License, Version 2.0'
+summary ''
+description ''
+
+dependency 'puppetlabs/vcsrepo'
+dependency 'puppetlabs/stdlib'
+dependency 'openstack-hyper-v/windows_common'
