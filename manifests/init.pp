@@ -12,6 +12,7 @@ class cloudbase_prep {
 
   vcsrepo {'cloudbase_scripts':
     ensure      => 'latest',
+    revision    => 'origin/HEAD',
     path        => 'C:/ProgramData/ci-overcloud-init-scripts',
     source      => 'https://github.com/cloudbase/ci-overcloud-init-scripts',
     provider    => 'git',
