@@ -17,9 +17,9 @@ class cloudbase_prep {
     source      => 'https://github.com/cloudbase/ci-overcloud-init-scripts',
     provider    => 'git',
   }
-  file {'C:/Openstack':
-    ensure  => directory,
-  }
+#  file {'C:/Openstack':
+#    ensure  => directory,
+#  }
   file {'C:/Openstack/devstack':
     ensure  => link,
     target  => 'C:/ProgramData/ci-overcloud-init-scripts/scripts/HyperV/',
