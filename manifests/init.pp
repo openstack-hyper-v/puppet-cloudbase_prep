@@ -1,4 +1,18 @@
 class cloudbase_prep {
+
+  class {'openstack_hyper_v::nova_dependencies':}
+
+  class { 'openstack_hyper_v::openstack::folders': 
+    require => Class['openstack_hyper_v::nova_dependencies'],
+  }
+
+  file {'C:/Openstack/bin':
+    ensure  => directory,
+    recurse => true,
+    source  => 'puppet:///extra_files/bin',
+    require => Class['openstack_hyper_v::openstack::folders'],
+  }
+
   windows_common::remote_file{'CBS_prep_WSMan_script':
     source      => 'https://raw2.github.com/cloudbase/unattended-setup-scripts/master/SetupWinRMAccess.ps1',
     destination => 'c:/SetupWinRMAccess.ps1',
@@ -23,7 +37,7 @@ class cloudbase_prep {
   file {'C:/Openstack/devstack':
     ensure  => link,
     target  => 'C:/ProgramData/ci-overcloud-init-scripts/scripts/HyperV/',
-    require => [Vcsrepo["cloudbase_scripts"],File['C:/Openstack']],
+    require => [Vcsrepo["cloudbase_scripts"],Class['openstack_hyper_v::openstack::folders']],
   }
 
 }
