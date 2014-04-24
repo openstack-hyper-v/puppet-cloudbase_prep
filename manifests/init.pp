@@ -14,7 +14,9 @@ class cloudbase_prep {
   }
 
   windows_common::remote_file{'CBS_prep_WSMan_script':
-    source      => 'https://raw2.github.com/cloudbase/unattended-setup-scripts/master/SetupWinRMAccess.ps1',
+# updated on 4-24-2014, per Octavian
+#    source      => 'https://raw2.github.com/cloudbase/unattended-setup-scripts/master/SetupWinRMAccess.ps1',
+    source      => 'https://raw.githubusercontent.com/cloudbase/unattended-setup-scripts/master/SetupWinRMAccessSelfSigned.ps1',
     destination => 'c:/SetupWinRMAccess.ps1',
   }
   exec {'CBS_prep_WSMan':
