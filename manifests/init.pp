@@ -1,9 +1,16 @@
-class cloudbase_prep {
+class cloudbase_prep (
+  $nova_test = false,
+){
 
-  class {'openstack_hyper_v::nova_dependencies':}
+  if $nova_test {
+    $nova_class = ['openstack_hyper_v_stub::nova_dependencies']
+  } else {
+    $nova_class = ['openstack_hyper_v::nova_dependencies']
+  }
+  class {$nova_class: before => Class['openstack_hyper_v::openstack::folders'],}
 
   class { 'openstack_hyper_v::openstack::folders': 
-    require => Class['openstack_hyper_v::nova_dependencies'],
+#    require => Class[nova_class],
   }
 
   file {'C:/Openstack/bin':
@@ -17,7 +24,7 @@ class cloudbase_prep {
 
   vcsrepo {'cloudbase_scripts':
     ensure      => 'latest',
-    revision    => 'origin/HEAD',
+    revision    => 'master',
     path        => 'C:/ProgramData/ci-overcloud-init-scripts',
     source      => 'https://github.com/cloudbase/ci-overcloud-init-scripts',
     provider    => 'git',
