@@ -2,12 +2,15 @@ class cloudbase_prep (
   $nova_test = false,
 ){
 
-  if $nova_test {
-    $nova_class = ['openstack_hyper_v_stub::nova_dependencies']
-  } else {
-    $nova_class = ['openstack_hyper_v::nova_dependencies']
-  }
-  class {$nova_class: before => Class['openstack_hyper_v::openstack::folders'],}
+#  if $nova_test {
+#    $nova_class = ['openstack_hyper_v_stub::nova_dependencies']
+#  } else {
+#    $nova_class = ['openstack_hyper_v::nova_dependencies']
+#  }
+#  class {$nova_class: before => Class['openstack_hyper_v::openstack::folders'],}
+
+  class { 'cloudbase_prep::python_init': }
+
 
   class { 'openstack_hyper_v::openstack::folders': 
 #    require => Class[nova_class],
