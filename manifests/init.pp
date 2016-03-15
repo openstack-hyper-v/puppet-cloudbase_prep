@@ -1,3 +1,4 @@
+# == Class: cloudbase_prep::init
 class cloudbase_prep (
   $nova_test = false,
 ){
@@ -12,7 +13,7 @@ class cloudbase_prep (
   class { 'cloudbase_prep::python_init': }
 
 
-  class { 'openstack_hyper_v::openstack::folders': 
+  class { 'openstack_hyper_v::openstack::folders':
 #    require => Class[nova_class],
   }
 
@@ -26,11 +27,11 @@ class cloudbase_prep (
   class { 'cloudbase_prep::wsman': }
 
   vcsrepo {'cloudbase_scripts':
-    ensure      => 'latest',
-    revision    => 'master',
-    path        => 'C:/ProgramData/ci-overcloud-init-scripts',
-    source      => 'https://github.com/cloudbase/ci-overcloud-init-scripts',
-    provider    => 'git',
+    ensure   => 'latest',
+    revision => 'master',
+    path     => 'C:/ProgramData/ci-overcloud-init-scripts',
+    source   => 'https://github.com/cloudbase/ci-overcloud-init-scripts',
+    provider => 'git',
   }
 #  file {'C:/Openstack':
 #    ensure  => directory,
@@ -38,7 +39,7 @@ class cloudbase_prep (
   file {'C:/Openstack/devstack':
     ensure  => link,
     target  => 'C:/ProgramData/ci-overcloud-init-scripts/scripts/HyperV/',
-    require => [Vcsrepo["cloudbase_scripts"],Class['openstack_hyper_v::openstack::folders']],
+    require => [Vcsrepo['cloudbase_scripts'],Class['openstack_hyper_v::openstack::folders']],
   }
 
 }

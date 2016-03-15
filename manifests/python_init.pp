@@ -25,12 +25,12 @@ class cloudbase_prep::python_init (
 
   windows_7zip::extract_file {'python_gzip-to-tar':
     file        => "${python_dir}.tar.gz",
-    destination => "c:/",
+    destination => 'c:/',
     subscribe   => Exec['clean_existing_python'],
   }
   windows_7zip::extract_file {'python_tar-to-dir':
     file        => "${python_dir}.tar",
-    destination => "c:/",
+    destination => 'c:/',
     subscribe   => Windows_7zip::Extract_file['python_gzip-to-tar'],
   }
   file { "${python_dir}.tar":
@@ -49,14 +49,14 @@ class cloudbase_prep::python_init (
 #    before  => Exec['install_python_wmi'],
 #  }
   exec { 'install_python_wmi':
-    command    => "${python_dir}\\scripts\\pip.exe install wmi",
+    command     => "${python_dir}\\scripts\\pip.exe install wmi",
     refreshonly => true,
-    subscribe  => Windows_7zip::Extract_file['python_tar-to-dir'],
+    subscribe   => Windows_7zip::Extract_file['python_tar-to-dir'],
   }
   exec { 'install_python_virtualenv':
-    command    => "${python_dir}\\scripts\\pip.exe install virtualenv",
+    command     => "${python_dir}\\scripts\\pip.exe install virtualenv",
     refreshonly => true,
-    subscribe  => Exec['install_python_wmi'],
+    subscribe   => Exec['install_python_wmi'],
   }
 
   exec { 'pywin32-postinstall-script':
@@ -78,7 +78,7 @@ class cloudbase_prep::python_init (
   }
 
   exec { 'clean_pip_whl_in_virtualenv':
-    command     => "Remove-Item -Force C:\Python27\Lib\site-packages\virtualenv_support\pip* >null 2>&1",
+    command     => 'Remove-Item -Force C:\Python27\Lib\site-packages\virtualenv_support\pip* >null 2>&1',
     refreshonly => true,
     returns     => [0,1],
     provider    => powershell,
@@ -99,9 +99,7 @@ class cloudbase_prep::python_init (
     destination => "${python_dir}/Lib/site-packages/virtualenv_support/pip-6.0.8-py2.py3-none-any.whl",
     require     => Exec['clean_pip_whl_in_virtualenv'],
   }
- 
   File["${python_dir}.tar"] -> Class['mingw']
-
   if !defined(Class['mingw']){
     class { 'mingw': }
   }
